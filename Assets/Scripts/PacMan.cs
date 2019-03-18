@@ -71,7 +71,7 @@ public class PacMan : MonoBehaviour
         }
         else if (direction == Vector2.down)
         {
-            transform.localeScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
             transform.localRotation = Quaternion.Euler(0, 0, 270);
         }
     }
