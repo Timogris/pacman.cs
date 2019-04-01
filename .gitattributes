@@ -52,3 +52,8 @@
 *.meta linguist-generated
 *.prefab linguist-generated
 *.unity linguist-generated
+
+# Merge
+*.unity binary
+*.prefab binary
+*.asset binary
