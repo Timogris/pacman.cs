@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool isPortal;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GameObject portalReceiver;
 }
