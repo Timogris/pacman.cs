@@ -36,6 +36,7 @@ public class PacMan : MonoBehaviour
         CheckInput();
         Move();
         UpdateOrientation();
+        updateAnimationState();
 
     }
 
@@ -82,7 +83,7 @@ public class PacMan : MonoBehaviour
         }
     }
 
-    //Move the PackMan
+    //Move the PacMan
     void Move()
     {
         if(targetNode != currentNode && targetNode != null)
@@ -170,6 +171,18 @@ public class PacMan : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);
             transform.localRotation = Quaternion.Euler(0, 0, 270);
+        }
+    }
+
+    void updateAnimationState()
+    {
+        if (direction == Vector2.zero)
+        {
+            GetComponent<Animator>().enabled = false;
+            GetComponent<SpriteRenderer>().sprite = idleSprite;
+        } else
+        {
+            GetComponent<Animator>().enabled = true;
         }
     }
 
