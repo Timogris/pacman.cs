@@ -12,6 +12,8 @@ public class PacMan : MonoBehaviour
     private Vector2 direction = Vector2.zero;
     private Vector2 nextDirection;
 
+    private int pelletsConsumed = 0;
+
     private Node currentNode, previousNode, targetNode;
 
     // Use this for initialization
@@ -32,6 +34,8 @@ public class PacMan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("SCORE: " + GameObject.Find("Game").GetComponent<GameBoard>().score);
+
         CheckInput();
 
         Move();
@@ -199,10 +203,12 @@ public class PacMan : MonoBehaviour
 
             if (tile != null)
             {
-                if (!tile.didConsume && (tile.isPellet || tile.isSuperPellet))
+                if (!tile.didConsume && (tile.isPellet || tile.isSuperPellet)) // Check si la pellet non consumee est normale ou super
                 {
-                    o.GetComponent<SpriteRenderer>().enabled = false;
-                    tile.didConsume = true;
+                    o.GetComponent<SpriteRenderer>().enabled = false; // Desactive le renderer pour la faire disparaitre
+                    tile.didConsume = true; // A ete consommee
+                    GameObject.Find("Game").GetComponent<GameBoard>().score += 1; // incremente a chaque pellet consommee
+                    pelletsConsumed++;
                 }
             }
         }
