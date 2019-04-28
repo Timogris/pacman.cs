@@ -32,12 +32,15 @@ public class PacMan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         CheckInput();
+
         Move();
+
         UpdateOrientation();
+
         updateAnimationState();
 
+        ConsumePellet();
     }
 
     void CheckInput()
@@ -186,6 +189,25 @@ public class PacMan : MonoBehaviour
         }
     }
 
+    void ConsumePellet()
+    {
+        GameObject o = GetTileAtPosition(transform.position);
+
+        if (o != null)
+        {
+            Tile tile = o.GetComponent<Tile>();
+
+            if (tile != null)
+            {
+                if (!tile.didConsume && (tile.isPellet || tile.isSuperPellet))
+                {
+                    o.GetComponent<SpriteRenderer>().enabled = false;
+                    tile.didConsume = true;
+                }
+            }
+        }
+    }
+
     //check if pacman can move
     Node CanMove(Vector2 d)
     {
@@ -203,6 +225,18 @@ public class PacMan : MonoBehaviour
         return moveToNode;
     }
 
+    GameObject GetTileAtPosition(Vector2 pos)
+    {
+        int tileX = Mathf.RoundToInt(pos.x);
+        int tileY = Mathf.RoundToInt(pos.y);
+
+        GameObject tile = GameObject.Find ("Game").GetComponent<GameBoard> ().board [tileX, tileY];
+
+        if (tile != null)
+            return tile;
+
+        return null;
+    }
 
     Node GetNodeAtPosition (Vector2 pos)
     {

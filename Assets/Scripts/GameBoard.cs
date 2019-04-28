@@ -18,7 +18,7 @@ public class GameBoard : MonoBehaviour {
         {
             Vector2 pos = obj.transform.position;
 
-            if(obj.name != "PacMan")
+            if(obj.name != "PacMan" && obj.name != "Nodes" && obj.name != "NonNodes" && obj.name != "Maze" && obj.name != "Pellets")
             {
                 board[(int)pos.x, (int)pos.y] = obj;
             }
