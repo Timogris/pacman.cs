@@ -17,15 +17,15 @@ public class GameBoard : MonoBehaviour {
 
         Object[] objects = GameObject.FindObjectsOfType(typeof(GameObject));
 
-        foreach(GameObject obj in objects)
+        foreach(GameObject o in objects)
         {
-            Vector2 pos = obj.transform.position;
+            Vector2 pos = o.transform.position;
 
-            if(obj.name != "PacMan" && obj.name != "Nodes" && obj.name != "NonNodes" && obj.name != "Maze" && obj.name != "Pellets")
+            if(o.name != "PacMan" && o.name != "Nodes" && o.name != "NonNodes" && o.name != "Maze" && o.name != "Pellets")
             {
-                if (obj.GetComponent<Tile> () != null)
+                if (o.GetComponent<Tile> () != null)
                 {
-                    if (obj.GetComponent<Tile> ().isPellet || obj.GetComponent<Tile> ().isSuperPellet)
+                    if (o.GetComponent<Tile> ().isPellet || o.GetComponent<Tile> ().isSuperPellet)
                     {
                         totalPellets++;
                     }
