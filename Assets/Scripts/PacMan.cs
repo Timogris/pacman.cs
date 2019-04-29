@@ -12,6 +12,8 @@ public class PacMan : MonoBehaviour
     private Vector2 direction = Vector2.zero;
     private Vector2 nextDirection;
 
+    private int pelletsConsumed = 0;
+
     private Node currentNode, previousNode, targetNode;
 
     // Use this for initialization
@@ -32,11 +34,17 @@ public class PacMan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("SCORE: " + GameObject.Find("Game").GetComponent<GameBoard>().score);
 
         CheckInput();
+
         Move();
+
         UpdateOrientation();
 
+        updateAnimationState();
+
+        ConsumePellet();
     }
 
     void CheckInput()
@@ -82,7 +90,7 @@ public class PacMan : MonoBehaviour
         }
     }
 
-    //Move the PackMan
+    //Move the PacMan
     void Move()
     {
         if(targetNode != currentNode && targetNode != null)
@@ -173,6 +181,39 @@ public class PacMan : MonoBehaviour
         }
     }
 
+    void updateAnimationState()
+    {
+        if (direction == Vector2.zero)
+        {
+            GetComponent<Animator>().enabled = false;
+            GetComponent<SpriteRenderer>().sprite = idleSprite;
+        } else
+        {
+            GetComponent<Animator>().enabled = true;
+        }
+    }
+
+    void ConsumePellet()
+    {
+        GameObject o = GetTileAtPosition(transform.position);
+
+        if (o != null)
+        {
+            Tile tile = o.GetComponent<Tile>();
+
+            if (tile != null)
+            {
+                if (!tile.didConsume && (tile.isPellet || tile.isSuperPellet)) // Check si la pellet non consumee est normale ou super
+                {
+                    o.GetComponent<SpriteRenderer>().enabled = false; // Desactive le renderer pour la faire disparaitre
+                    tile.didConsume = true; // A ete consommee
+                    GameObject.Find("Game").GetComponent<GameBoard>().score += 1; // incremente a chaque pellet consommee
+                    pelletsConsumed++;
+                }
+            }
+        }
+    }
+
     //check if pacman can move
     Node CanMove(Vector2 d)
     {
@@ -190,6 +231,18 @@ public class PacMan : MonoBehaviour
         return moveToNode;
     }
 
+    GameObject GetTileAtPosition(Vector2 pos)
+    {
+        int tileX = Mathf.RoundToInt(pos.x);
+        int tileY = Mathf.RoundToInt(pos.y);
+
+        GameObject tile = GameObject.Find ("Game").GetComponent<GameBoard> ().board [tileX, tileY];
+
+        if (tile != null)
+            return tile;
+
+        return null;
+    }
 
     Node GetNodeAtPosition (Vector2 pos)
     {
