@@ -30,7 +30,7 @@ public class GameBoard : MonoBehaviour {
                         totalPellets++;
                     }
                 }
-                board[(int)pos.x, (int)pos.y] = obj;
+                board[(int)pos.x, (int)pos.y] = o;
             }
             else
             {

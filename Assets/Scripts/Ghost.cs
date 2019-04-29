@@ -40,13 +40,16 @@ public class Ghost : MonoBehaviour
     void Start()
     {
         pacMan = GameObject.FindGameObjectWithTag("PacMan");
-
+        //pacMan = GameObject.FindObjectsOfType("PacMan");
+        
         Node node = GetNodeAtPosition(transform.localPosition);
 
         if (node != null)
         {
             currentNode = node;
         }
+
+        direction = Vector2.right;
 
         previousNode = currentNode;
 
